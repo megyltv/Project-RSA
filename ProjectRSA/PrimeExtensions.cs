@@ -12,23 +12,22 @@ namespace ProjectRSA
         /// </summary>
         public static bool IsPrime(int number)
         {
-            if (number <= 1 || number % 2 == 0) return false;
+            if (number % 2 == 0) return false;
             if (number <= 3) return true;
 
-            int d = number - 1;
+            var d = number - 1;
             d /= 2;
 
             var numberOfRounds = 5;
-
             for (var i = 0; i < numberOfRounds; i++)
             {
-                int modularExponentiation = GetModularExponentiation(number, d);
+                var modularExponentiation = GetModularExponentiation(number, d);
                 if (modularExponentiation == 1 || modularExponentiation == number - 1) return true;
 
                 while (d != number - 1)
                 {
                     modularExponentiation = (int)Math.Pow(modularExponentiation, 2) % number;
-                    d *= 2;
+                    d = d*2;
 
                     if (IsComposite(modularExponentiation)) return false;
                     if (modularExponentiation == number - 1) return true;
@@ -48,10 +47,9 @@ namespace ProjectRSA
             {
                 if (d % 2 == 1)
                     modularExponentiation = (modularExponentiation * random) % number;
-                d /= 2;
+                d = d/2;
                 random = (int)Math.Pow(random, 2) % number;
             }
-
             return modularExponentiation;
         }
 
