@@ -6,9 +6,11 @@ namespace ProjectRSA.RSA
     {
         public void CalculateRsa()
         {
-            SelectionOfParameters();
-            CipherMessage();
-            DecipherMessage();
+            bool showMenu = true;
+            while (showMenu)
+            {
+                showMenu = ShowRsaMenu();
+            }
         }
 
         private void DecipherMessage()
@@ -37,6 +39,34 @@ namespace ProjectRSA.RSA
             Console.WriteLine($"e = {e}");
             var d = ParameterSelection.CalculateD(PhiN, e);
             Console.WriteLine($"d = {d}");
+        }
+
+        private bool ShowRsaMenu()
+        {
+            Console.WriteLine("----- RSA -----");
+            Console.WriteLine("Choose an option:");
+            Console.WriteLine("1. Select parameters");
+            Console.WriteLine("2. Cipher message");
+            Console.WriteLine("3. Decipher message");
+            Console.WriteLine("4. Exit");
+            Console.Write("Option: ");
+
+            switch (Console.ReadLine())
+            {
+                case "1":
+                    SelectionOfParameters();
+                    return true;
+                case "2":
+                    CipherMessage();
+                    return true;
+                case "3":
+                    DecipherMessage();
+                    return true;
+                case "4":
+                    return false;
+                default:
+                    return true;
+            }
         }
     }
 }
