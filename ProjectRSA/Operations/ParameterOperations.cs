@@ -1,8 +1,9 @@
-﻿using System;
+﻿using ProjectRSA.Extensions;
+using System;
 
-namespace ProjectRSA
+namespace ProjectRSA.Operations
 {
-    public class ParameterSelection
+    public class ParameterOperations
     {
         public static int GetPrimeRandomNumber(int seed)
         {

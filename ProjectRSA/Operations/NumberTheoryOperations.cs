@@ -1,4 +1,4 @@
-﻿namespace ProjectRSA
+﻿namespace ProjectRSA.Operations
 {
     public class NumberTheoryOperations
     {
