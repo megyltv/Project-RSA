@@ -1,4 +1,4 @@
-﻿using ProjectRSA.Operations;
+﻿using ProjectRSA.Model;
 using System;
 
 namespace ProjectRSA.Handlers
@@ -21,11 +21,12 @@ namespace ProjectRSA.Handlers
 
         private void CipherMessage()
         {
+            var rsa = new Rsa();
             // N, e, m
             Console.Write("Enter N: ");
-            var publicN = int.Parse(Console.ReadLine());
+            rsa.N = int.Parse(Console.ReadLine());
             Console.Write("Enter e: ");
-            var publicE = int.Parse(Console.ReadLine());
+            rsa.E = int.Parse(Console.ReadLine());
             Console.Write("Enter message: ");
             var message = Console.ReadLine();
         }
@@ -43,7 +44,8 @@ namespace ProjectRSA.Handlers
             switch (Console.ReadLine())
             {
                 case "1":
-                    SelectionOfParameters();
+                    var rsa = new Rsa();
+                    rsa.SetValues();
                     return true;
                 case "2":
                     CipherMessage();
@@ -56,24 +58,6 @@ namespace ProjectRSA.Handlers
                 default:
                     return true;
             }
-        }
-
-        private void SelectionOfParameters()
-        {
-            Console.WriteLine("Calculate p and q");
-            var p = ParameterOperations.GetPrimeRandomNumber(125);
-            Console.WriteLine($"p = {p}. p is prime");
-            var q = ParameterOperations.GetPrimeRandomNumber(6110);
-            Console.WriteLine($"q = {q}. q is prime");
-            var N = ParameterOperations.CalculateN(p, q);
-            Console.WriteLine($"N = {N}");
-            var PhiN = ParameterOperations.CalculatePhiN(p, q);
-            Console.WriteLine($"Phi(N) = {PhiN}");
-            Console.WriteLine("Calculate e and d");
-            var e = ParameterOperations.CalculateE(PhiN);
-            Console.WriteLine($"e = {e}");
-            var d = ParameterOperations.CalculateD(PhiN, e);
-            Console.WriteLine($"d = {d}");
         }
     }
 }
