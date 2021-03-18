@@ -1,4 +1,7 @@
-﻿namespace ProjectRSA.Operations
+﻿using System;
+using System.Linq;
+
+namespace ProjectRSA.Operations
 {
     public class NumberTheoryOperations
     {
@@ -52,6 +55,25 @@
             }
 
             return y > 0 ? y: number+y;
+        }
+
+        public static int CalculateSquareAndMultiply(int exponent, int @base, int mod)
+        {
+            var binary = Convert.ToString(exponent, 2);
+            var binaryArray = binary.ToCharArray();
+            
+            var result = 1;
+
+            for(var i = binaryArray.Length -1; i >= 0; i--)
+            {
+                var bit = binaryArray.ElementAt(i);
+                if (bit == '1')
+                    result = (@base * result) % mod;
+
+                @base = (int)Math.Pow(@base, 2) % mod;
+            }
+
+            return result;
         }
     }
 }

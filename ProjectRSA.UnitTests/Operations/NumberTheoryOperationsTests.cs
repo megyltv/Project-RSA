@@ -18,7 +18,7 @@ namespace ProjectRSA.UnitTests.Operations
         [Theory]
         [InlineData(167, 32)]
         [InlineData(67, 23)]
-        public void GetGcd_ShouldReturnOne_WhenNumberDoesntHaceGcd(int bigNumber, int smallNumber)
+        public void GetGcd_ShouldReturnOne_WhenNumberDoesntHaveGcd(int bigNumber, int smallNumber)
         {
             var gcd = NumberTheoryOperations.CalculateGcd(bigNumber, smallNumber);
 
@@ -34,6 +34,17 @@ namespace ProjectRSA.UnitTests.Operations
             var d = NumberTheoryOperations.CalculateMultiplicativeInverse(phiN, e);
 
             Assert.Equal(expectedInverse, d);
+        }
+
+        [Theory]
+        [InlineData(7, 6, 11, 4)]
+        [InlineData(15, 37, 77, 71)]
+        [InlineData(159, 101, 551, 11)]
+        public void CalculateSquareAndMultiply_ShouldGetModularExponentialNumber(int @base, int exponent, int mod, int expectedResult)
+        {
+            var result = NumberTheoryOperations.CalculateSquareAndMultiply(exponent, @base, mod);
+
+            Assert.Equal(expectedResult, result);
         }
     }
 }

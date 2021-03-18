@@ -7,12 +7,12 @@ namespace ProjectRSA.Operations
     {
         public static int GetPrimeRandomNumber(int seed)
         {
-            int random;
-            do
+            var random = new Random(seed).Next(32768, 65535);
+            while (!PrimeExtensions.IsPrime(random))
             {
                 random = new Random(seed).Next(32768, 65535);
                 seed += 2;
-            } while (!PrimeExtensions.IsPrime(random));
+            }
             return random;
         }
 
