@@ -5,12 +5,12 @@ namespace ProjectRSA.Model
 {
     public class Rsa
     {
-        public int P { get; set; }
-        public int Q { get; set; }
-        public int N { get; set; }
-        public int PhiN { get; set; }
-        public int E { get; set; }
-        public int D { get; set; }
+        public long P { get; set; }
+        public long Q { get; set; }
+        public long N { get; set; }
+        public long PhiN { get; set; }
+        public long E { get; set; }
+        public long D { get; set; }
 
         public void SetValues()
         {

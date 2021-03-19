@@ -1,5 +1,8 @@
-﻿using ProjectRSA.Model;
+﻿using ProjectRSA.Extensions;
+using ProjectRSA.Model;
+using ProjectRSA.Operations;
 using System;
+using System.Linq;
 
 namespace ProjectRSA.Handlers
 {
@@ -16,19 +19,33 @@ namespace ProjectRSA.Handlers
 
         private void DecipherMessage()
         {
-            // N, d, c
+            var rsa = new Rsa();
+            Console.Write("Enter N: ");
+            rsa.N = int.Parse(Console.ReadLine());
+            Console.Write("Enter d: ");
+            rsa.D = int.Parse(Console.ReadLine());
+            Console.Write("Enter message: ");
+            var cipher = Console.ReadLine();
+            // Separate ints
+            // Decipher
+            // To hex
+            // To string
         }
 
         private void CipherMessage()
         {
             var rsa = new Rsa();
-            // N, e, m
             Console.Write("Enter N: ");
             rsa.N = int.Parse(Console.ReadLine());
             Console.Write("Enter e: ");
             rsa.E = int.Parse(Console.ReadLine());
             Console.Write("Enter message: ");
             var message = Console.ReadLine();
+            var messageInts = MessageExtensions.ConvertToInt(message);
+            var cipherMessage = messageInts.Select(msg => NumberTheoryOperations.CalculateSquareAndMultiply(rsa.E, msg, rsa.N)).ToList();
+            var printMessage = string.Empty;
+            cipherMessage.ForEach(cipher => printMessage += $"{cipher},");
+            Console.WriteLine(printMessage.Substring(0, printMessage.Length-1));
         }
 
         private bool ShowRsaMenu()

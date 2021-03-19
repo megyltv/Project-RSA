@@ -8,11 +8,11 @@ namespace ProjectRSA.Extensions
     {
        private const int SizeChunks = 3;
 
-       public static List<int> ConvertToInt(string message)
+       public static List<long> ConvertToInt(string message)
        {
             var messageChunks = SeparateMessageChunks(message);
 
-            var result = new List<int>();
+            var result = new List<long>();
             foreach (var chunk in messageChunks)
             {
                 var hexadecimals = Encoding.Default.GetBytes(chunk);

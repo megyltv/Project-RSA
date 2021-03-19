@@ -5,7 +5,7 @@ namespace ProjectRSA.Operations
 {
     public class ParameterOperations
     {
-        public static int GetPrimeRandomNumber(int seed)
+        public static long GetPrimeRandomNumber(int seed)
         {
             var random = new Random(seed).Next(32768, 65535);
             while (!PrimeExtensions.IsPrime(random))
@@ -16,23 +16,23 @@ namespace ProjectRSA.Operations
             return random;
         }
 
-        public static int CalculateN(int p, int q) => p * q;
+        public static long CalculateN(long p, long q) => p * q;
 
-        public static int CalculatePhiN(int p, int q) => (p - 1) * (q - 1);
+        public static long CalculatePhiN(long p, long q) => (p - 1) * (q - 1);
 
-        public static int CalculateE(int phiN)
+        public static long CalculateE(long phiN)
         {
-            int e;
+            long e;
             var seed = 100;
             do
             {
-                e = new Random(seed).Next(1, phiN - 1);
+                e = new Random(seed).Next(1, (int)phiN - 1);
                 seed += 2;
             } while (NumberTheoryOperations.CalculateGcd(phiN, e) != 1);
             return e;
         }
 
-        public static int CalculateD(int phiN, int e)  => 
+        public static long CalculateD(long phiN, long e)  => 
             NumberTheoryOperations.CalculateMultiplicativeInverse(phiN, e);
     }
 }
