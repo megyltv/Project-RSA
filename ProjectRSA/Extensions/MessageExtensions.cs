@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace ProjectRSA.Extensions
@@ -22,6 +23,24 @@ namespace ProjectRSA.Extensions
             }
 
             return result;
+        }
+
+        public static string ConvertToMessage(List<long> decipherNumbers)
+        {
+            var chunks = new List<string>();
+            foreach(var cipher in decipherNumbers)
+            {
+                var hexadecimalString = cipher.ToString("X");
+                var bytes = new byte[hexadecimalString.Length / 2];
+                for (int i = 0; i < bytes.Length; i++)
+                {
+                    bytes[i] = Convert.ToByte(hexadecimalString.Substring(i * 2, 2), 16);
+                }
+                chunks.Add(Encoding.ASCII.GetString(bytes));
+            }
+
+            var message = string.Join(string.Empty, chunks);
+            return message;
         }
 
         private static List<string> SeparateMessageChunks(string message)

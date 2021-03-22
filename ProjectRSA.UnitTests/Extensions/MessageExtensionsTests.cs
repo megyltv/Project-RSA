@@ -20,5 +20,15 @@ namespace ProjectRSA.UnitTests.Extensions
                 Assert.Equal(expectedChunks[i], chunks[i]);
             }
         }
+
+        [Fact]
+        public void ConvertToMessage()
+        {
+            var cipherNumbers = new List<long> { 4744556,7106336,5730162,27748 };
+
+            var message = MessageExtensions.ConvertToMessage(cipherNumbers);
+
+            Assert.Equal("Hello World", message);
+        }
     }
 }

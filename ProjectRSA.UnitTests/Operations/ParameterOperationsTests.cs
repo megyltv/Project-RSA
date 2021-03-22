@@ -8,10 +8,10 @@ namespace ProjectRSA.UnitTests.Operations
         [Fact]
         public void CalculateN_ShouldCalculateN_GivenTwoPrimeNumbers()
         {
-            var p = 11;
-            var q = 7;
+            long p = 11;
+            long q = 7;
 
-            var N = ParameterOperations.CalculateN(11, 7);
+            var N = ParameterOperations.CalculateN(p, q);
 
             Assert.Equal(77, N);
         }
@@ -49,10 +49,10 @@ namespace ProjectRSA.UnitTests.Operations
             Assert.Equal(13, d);
         }
 
-        private int CalculateGcd(int bigNumber, int smallNumber)
+        private long CalculateGcd(long bigNumber, long smallNumber)
         {
-            var number1 = bigNumber;
-            var number2 = smallNumber;
+            long number1 = bigNumber;
+            long number2 = smallNumber;
 
             while (number2 != 0)
             {

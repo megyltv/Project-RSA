@@ -17,7 +17,7 @@ namespace ProjectRSA.Model
             Console.WriteLine("Calculate p and q");
             P = ParameterOperations.GetPrimeRandomNumber(125);
             Console.WriteLine($"p = {P}. p is prime");
-            Q = ParameterOperations.GetPrimeRandomNumber(6110);
+            Q = ParameterOperations.GetPrimeRandomNumber(6112);
             Console.WriteLine($"q = {Q}. q is prime");
             N = ParameterOperations.CalculateN(P, Q);
             Console.WriteLine($"N = {N}");
