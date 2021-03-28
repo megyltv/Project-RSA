@@ -12,6 +12,7 @@ namespace ProjectRSA.Extensions
        public static List<long> ConvertToInt(string message)
        {
             var messageChunks = SeparateMessageChunks(message);
+            Console.WriteLine($"Message chunks: {string.Join(',', messageChunks)}");
 
             var result = new List<long>();
             foreach (var chunk in messageChunks)
@@ -38,7 +39,7 @@ namespace ProjectRSA.Extensions
                 }
                 chunks.Add(Encoding.ASCII.GetString(bytes));
             }
-
+            Console.WriteLine($"Message chunks: {string.Join(',', chunks)}");
             var message = string.Join(string.Empty, chunks);
             return message;
         }
