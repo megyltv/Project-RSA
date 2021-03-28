@@ -5,13 +5,12 @@ namespace ProjectRSA.Operations
 {
     public class ParameterOperations
     {
-        public static long GetPrimeRandomNumber(int seed)
+        public static long GetPrimeRandomNumber()
         {
-            var random = new Random(seed).Next(32768, 65535);
+            var random = new Random().Next(32768, 65535);
             while (!PrimeExtensions.IsPrime(random))
             {
-                random = new Random(seed).Next(32768, 65535);
-                seed += 2;
+                random = new Random().Next(32768, 65535);
             }
             return random;
         }

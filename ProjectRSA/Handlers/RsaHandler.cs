@@ -22,9 +22,9 @@ namespace ProjectRSA.Handlers
             Console.WriteLine("\n----- Decryption -----\n");
             var rsa = new Rsa();
             Console.Write("Enter N: ");
-            rsa.N = long.Parse(Console.ReadLine());
+            rsa.N = long.Parse(Console.ReadLine().Trim());
             Console.Write("Enter d: ");
-            rsa.D = long.Parse(Console.ReadLine());
+            rsa.D = long.Parse(Console.ReadLine().Trim());
             Console.Write("Enter message: ");
             var cipher = Console.ReadLine();
             var ciphers = cipher.Split(',');
