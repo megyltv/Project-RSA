@@ -22,7 +22,6 @@ namespace ProjectRSA.Operations
                 number1 = number2;
                 number2 = remainder;
             }
-            Console.WriteLine("gcd" + number1);
             return number1;
         }
 
@@ -61,19 +60,18 @@ namespace ProjectRSA.Operations
         public static long CalculateSquareAndMultiply(long exponent, long @base, long mod)
         {
             var binary = Convert.ToString(exponent, 2);
-            var binaryArray = binary.ToCharArray();
-            
+            var binaryArray = binary.Select(b => int.Parse(b.ToString())).ToList();
+            binaryArray.Reverse();
             long result = 1;
 
-            for(var i = binaryArray.Length -1; i >= 0; i--)
+            for (var i = 0; i < binaryArray.Count; i++)
             {
                 var bit = binaryArray.ElementAt(i);
-                if (bit == '1')
+                if (bit == 1)
                     result = (@base * result) % mod;
 
-                @base = (long)Math.Pow(@base, 2) % mod;
+                @base = (long)(@base * @base) % mod;
             }
-
             return result;
         }
     }

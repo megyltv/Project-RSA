@@ -19,11 +19,12 @@ namespace ProjectRSA.Handlers
 
         private void DecipherMessage()
         {
+            Console.WriteLine("\n----- Decryption -----\n");
             var rsa = new Rsa();
             Console.Write("Enter N: ");
-            rsa.N = int.Parse(Console.ReadLine());
+            rsa.N = long.Parse(Console.ReadLine());
             Console.Write("Enter d: ");
-            rsa.D = int.Parse(Console.ReadLine());
+            rsa.D = long.Parse(Console.ReadLine());
             Console.Write("Enter message: ");
             var cipher = Console.ReadLine();
             var ciphers = cipher.Split(',');
@@ -35,15 +36,15 @@ namespace ProjectRSA.Handlers
 
         private void CipherMessage()
         {
+            Console.WriteLine("\n----- Encryption -----\n");
             var rsa = new Rsa();
             Console.Write("Enter N: ");
-            rsa.N = int.Parse(Console.ReadLine());
+            rsa.N = long.Parse(Console.ReadLine());
             Console.Write("Enter e: ");
-            rsa.E = int.Parse(Console.ReadLine());
+            rsa.E = long.Parse(Console.ReadLine());
             Console.Write("Enter message: ");
             var message = Console.ReadLine();
             var messageInts = MessageExtensions.ConvertToInt(message);
-            Console.WriteLine("Before cipher: " + messageInts.First());
             var cipherMessage = messageInts.Select(msg => NumberTheoryOperations.CalculateSquareAndMultiply(rsa.E, msg, rsa.N)).ToList();
             var printMessage = string.Empty;
             cipherMessage.ForEach(cipher => printMessage += $"{cipher},");
@@ -52,7 +53,7 @@ namespace ProjectRSA.Handlers
 
         private bool ShowRsaMenu()
         {
-            Console.WriteLine("----- RSA -----");
+            Console.WriteLine("\n----- RSA -----\n");
             Console.WriteLine("Choose an option:");
             Console.WriteLine("1. Select parameters");
             Console.WriteLine("2. Cipher message");

@@ -4,6 +4,7 @@ namespace ProjectRSA.Extensions
 {
     /// <summary>
     /// Determine if the number is prime using Miller-Rabin algorithm
+    /// Reference: https://www.geeksforgeeks.org/primality-test-set-3-miller-rabin/
     /// </summary>
     public static class PrimeExtensions
     {

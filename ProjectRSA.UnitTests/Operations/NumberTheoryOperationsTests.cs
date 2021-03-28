@@ -40,7 +40,8 @@ namespace ProjectRSA.UnitTests.Operations
         [InlineData(7, 6, 11, 4)]
         [InlineData(15, 37, 77, 71)]
         [InlineData(159, 101, 551, 11)]
-        [InlineData(7106336, 15935561, 1169623627, 169484800)]
+        [InlineData(4744556, 1684310123, 1738682993, 1133001575)]
+        [InlineData(1133001575, 1015505987, 1738682993, 4744556)]
         public void CalculateSquareAndMultiply_ShouldGetModularExponentialNumber(long @base, long exponent, long mod, long expectedResult)
         {
             var result = NumberTheoryOperations.CalculateSquareAndMultiply(exponent, @base, mod);
