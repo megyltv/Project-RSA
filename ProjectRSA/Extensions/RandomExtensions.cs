@@ -4,6 +4,7 @@ namespace ProjectRSA.Extensions
 {
     /// <summary>
     /// Reference: https://gist.github.com/subena22jf/c7bb027ea99127944981
+    /// Licensed under CC-attribution: Right to share, use, and build upon a work that they (the author) have created
     /// </summary>
     public static class RandomExtensions
     {

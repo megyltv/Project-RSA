@@ -36,7 +36,7 @@ namespace ProjectRSA.Handlers
             var rsa = new Rsa
             {
                 N = TryParse(ReadLineFromConsole("N")),
-                E = TryParse(ReadLineFromConsole("d"))
+                E = TryParse(ReadLineFromConsole("e"))
             };
             Console.Write("Enter message: ");
             var message = Console.ReadLine();
