@@ -49,5 +49,25 @@ namespace ProjectRSA.Model
             var message = MessageExtensions.ConvertToMessage(deciphers);
             Console.WriteLine($"Message: {message}");
         }
+
+        public void SignMessage(string message)
+        {
+            var messageInts = MessageExtensions.ConvertToInt(message);
+            var cipherMessage = messageInts.Select(msg => NumberTheoryOperations.CalculateSquareAndMultiply(D, msg, N)).ToList();
+            var printMessage = string.Empty;
+            cipherMessage.ForEach(cipher => printMessage += $"{cipher},");
+            Console.WriteLine(printMessage[0..^1]);
+        }
+
+        public void VerifyMessage(IEnumerable<long> cipherNumbers, string message)
+        {
+            var values = cipherNumbers.Select(msg => NumberTheoryOperations.CalculateSquareAndMultiply(E, msg, N)).ToList();
+            var messageSigned = MessageExtensions.ConvertToMessage(values);
+
+            if (message != messageSigned)
+                Console.WriteLine($"Different signatures");
+            Console.WriteLine($"Signature verified");
+            Console.WriteLine($"MessageSigned: {messageSigned} == Message: {message}");
+        }
     }
 }
