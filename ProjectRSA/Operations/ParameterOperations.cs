@@ -5,14 +5,17 @@ namespace ProjectRSA.Operations
 {
     public class ParameterOperations
     {
+        private const int MinValue = 32768;
+        private const int MaxValue = 65535;
+
         public static long GetPrimeRandomNumber()
         {
-            var random = new Random().Next(32768, 65535);
-            while (!PrimeExtensions.IsPrime(random))
+            int random;
+            do
             {
-                random = new Random().Next(32768, 65535);
-            }
-            return random;
+                random = new Random().Next(MinValue, MaxValue);
+            } while (!PrimeExtensions.IsPrime(random));
+           return random;
         }
 
         public static long CalculateN(long p, long q) => p * q;
@@ -22,11 +25,9 @@ namespace ProjectRSA.Operations
         public static long CalculateE(long phiN)
         {
             long e;
-            var seed = 100;
             do
             {
-                e = new Random(seed).Next(1, (int)phiN - 1);
-                seed += 2;
+                e = RandomExtensions.Next(1, phiN - 1);
             } while (NumberTheoryOperations.CalculateGcd(phiN, e) != 1);
             return e;
         }

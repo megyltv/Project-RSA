@@ -20,15 +20,15 @@ namespace ProjectRSA.Handlers
         private void DecipherMessage()
         {
             Console.WriteLine("\n----- Decryption -----\n");
-            var rsa = new Rsa();
-            Console.Write("Enter N: ");
-            rsa.N = long.Parse(Console.ReadLine().Trim());
-            Console.Write("Enter d: ");
-            rsa.D = long.Parse(Console.ReadLine().Trim());
+            var rsa = new Rsa
+            {
+                N = TryParse(ReadLineFromConsole("N")),
+                D = TryParse(ReadLineFromConsole("d"))
+            };
             Console.Write("Enter message: ");
             var cipher = Console.ReadLine();
-            var ciphers = cipher.Split(',');
-            var cipherNumbers = ciphers.Select(cipher => long.Parse(cipher.Trim()));
+            var ciphers = cipher.Split(',').ToList();
+            var cipherNumbers = ciphers.Select(cipher => TryParse(cipher.Trim()));
             var deciphers = cipherNumbers.Select(msg => NumberTheoryOperations.CalculateSquareAndMultiply(rsa.D, msg, rsa.N)).ToList();
             var message = MessageExtensions.ConvertToMessage(deciphers);
             Console.WriteLine($"Message: {message}");
@@ -37,18 +37,38 @@ namespace ProjectRSA.Handlers
         private void CipherMessage()
         {
             Console.WriteLine("\n----- Encryption -----\n");
-            var rsa = new Rsa();
-            Console.Write("Enter N: ");
-            rsa.N = long.Parse(Console.ReadLine());
-            Console.Write("Enter e: ");
-            rsa.E = long.Parse(Console.ReadLine());
+            var rsa = new Rsa
+            {
+                N = TryParse(ReadLineFromConsole("N")),
+                E = TryParse(ReadLineFromConsole("d"))
+            };
             Console.Write("Enter message: ");
             var message = Console.ReadLine();
             var messageInts = MessageExtensions.ConvertToInt(message);
             var cipherMessage = messageInts.Select(msg => NumberTheoryOperations.CalculateSquareAndMultiply(rsa.E, msg, rsa.N)).ToList();
             var printMessage = string.Empty;
             cipherMessage.ForEach(cipher => printMessage += $"{cipher},");
-            Console.WriteLine(printMessage.Substring(0, printMessage.Length-1));
+            Console.WriteLine(printMessage[0..^1]);
+        }
+
+        private string ReadLineFromConsole(string parameterName)
+        {
+            string line;
+            do
+            {
+                Console.Write($"Enter {parameterName}: ");
+                line = Console.ReadLine().Trim();
+            } while (string.IsNullOrWhiteSpace(line));
+            return line;
+        }
+
+        private long TryParse(string valueString)
+        {
+            var success = long.TryParse(valueString, out long value);
+            if(success)
+                return value;
+            Console.WriteLine($"Invalid value provided: \"{valueString}\". Set value to 1");
+            throw new ArgumentException("valueString", "The value must be a number");
         }
 
         private bool ShowRsaMenu()
