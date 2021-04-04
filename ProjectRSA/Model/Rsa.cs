@@ -1,5 +1,8 @@
-﻿using ProjectRSA.Operations;
+﻿using ProjectRSA.Extensions;
+using ProjectRSA.Operations;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ProjectRSA.Model
 {
@@ -29,6 +32,22 @@ namespace ProjectRSA.Model
             Console.WriteLine($"e = {E}");
             D = ParameterOperations.CalculateD(PhiN, E);
             Console.WriteLine($"d = {D}");
+        }
+
+        public void CipherMessage(string message)
+        {
+            var messageInts = MessageExtensions.ConvertToInt(message);
+            var cipherMessage = messageInts.Select(msg => NumberTheoryOperations.CalculateSquareAndMultiply(E, msg, N)).ToList();
+            var printMessage = string.Empty;
+            cipherMessage.ForEach(cipher => printMessage += $"{cipher},");
+            Console.WriteLine(printMessage[0..^1]);
+        }
+
+        public void DecipherMessage(IEnumerable<long> cipherNumbers)
+        {
+            var deciphers = cipherNumbers.Select(msg => NumberTheoryOperations.CalculateSquareAndMultiply(D, msg, N)).ToList();
+            var message = MessageExtensions.ConvertToMessage(deciphers);
+            Console.WriteLine($"Message: {message}");
         }
     }
 }

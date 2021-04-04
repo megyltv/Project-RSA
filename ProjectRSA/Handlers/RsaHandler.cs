@@ -1,6 +1,4 @@
-﻿using ProjectRSA.Extensions;
-using ProjectRSA.Model;
-using ProjectRSA.Operations;
+﻿using ProjectRSA.Model;
 using System;
 using System.Linq;
 
@@ -29,9 +27,7 @@ namespace ProjectRSA.Handlers
             var cipher = Console.ReadLine();
             var ciphers = cipher.Split(',').ToList();
             var cipherNumbers = ciphers.Select(cipher => TryParse(cipher.Trim()));
-            var deciphers = cipherNumbers.Select(msg => NumberTheoryOperations.CalculateSquareAndMultiply(rsa.D, msg, rsa.N)).ToList();
-            var message = MessageExtensions.ConvertToMessage(deciphers);
-            Console.WriteLine($"Message: {message}");
+            rsa.DecipherMessage(cipherNumbers);
         }
 
         private void CipherMessage()
@@ -44,11 +40,7 @@ namespace ProjectRSA.Handlers
             };
             Console.Write("Enter message: ");
             var message = Console.ReadLine();
-            var messageInts = MessageExtensions.ConvertToInt(message);
-            var cipherMessage = messageInts.Select(msg => NumberTheoryOperations.CalculateSquareAndMultiply(rsa.E, msg, rsa.N)).ToList();
-            var printMessage = string.Empty;
-            cipherMessage.ForEach(cipher => printMessage += $"{cipher},");
-            Console.WriteLine(printMessage[0..^1]);
+            rsa.CipherMessage(message);
         }
 
         private string ReadLineFromConsole(string parameterName)
