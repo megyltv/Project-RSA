@@ -15,17 +15,15 @@ namespace ProjectRSA.Extensions
             if (maxValue <= minValue)
                 throw new ArgumentOutOfRangeException("maxValue", "minValue cannot be greated than MaxValue");
 
-            ulong range = (ulong)(maxValue - minValue);
-
             ulong randomLong;
             do
             {
-                byte[] buffer = new byte[8];
+                byte[] buffer = new byte[sizeof(ulong)];
                 random.NextBytes(buffer);
-                randomLong = (ulong)BitConverter.ToInt64(buffer, 0);
-            } while (randomLong > ulong.MaxValue - ((ulong.MaxValue % range) + 1) % range);
+                randomLong = BitConverter.ToUInt64(buffer, 0);
+            } while ((randomLong > ulong.MaxValue) && (randomLong < ulong.MinValue));
 
-            return (long)(randomLong % range) + minValue;
+            return (long)(randomLong % (ulong)(maxValue - minValue)) + minValue;
         }
     }
 }

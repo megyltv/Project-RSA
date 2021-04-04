@@ -1,4 +1,5 @@
-﻿using ProjectRSA.Model;
+﻿using ProjectRSA.Extensions;
+using ProjectRSA.Models;
 using System;
 using System.Linq;
 
@@ -20,13 +21,13 @@ namespace ProjectRSA.Handlers
             Console.WriteLine("\n----- Decryption -----\n");
             var rsa = new Rsa
             {
-                N = TryParse(ReadLineFromConsole("N")),
-                D = TryParse(ReadLineFromConsole("d"))
+                N = ParseExtensions.TryParse(ReadLineFromConsole("N")),
+                D = ParseExtensions.TryParse(ReadLineFromConsole("d"))
             };
             Console.Write("Enter message: ");
             var cipher = Console.ReadLine();
             var ciphers = cipher.Split(',').ToList();
-            var cipherNumbers = ciphers.Select(cipher => TryParse(cipher.Trim()));
+            var cipherNumbers = ciphers.Select(cipher => ParseExtensions.TryParse(cipher.Trim()));
             rsa.DecipherMessage(cipherNumbers);
         }
 
@@ -35,8 +36,8 @@ namespace ProjectRSA.Handlers
             Console.WriteLine("\n----- Encryption -----\n");
             var rsa = new Rsa
             {
-                N = TryParse(ReadLineFromConsole("N")),
-                E = TryParse(ReadLineFromConsole("e"))
+                N = ParseExtensions.TryParse(ReadLineFromConsole("N")),
+                E = ParseExtensions.TryParse(ReadLineFromConsole("e"))
             };
             Console.Write("Enter message: ");
             var message = Console.ReadLine();
@@ -52,15 +53,6 @@ namespace ProjectRSA.Handlers
                 line = Console.ReadLine().Trim();
             } while (string.IsNullOrWhiteSpace(line));
             return line;
-        }
-
-        private long TryParse(string valueString)
-        {
-            var success = long.TryParse(valueString, out long value);
-            if(success)
-                return value;
-            Console.WriteLine($"Invalid value provided: \"{valueString}\". Set value to 1");
-            throw new ArgumentException("valueString", "The value must be a number");
         }
 
         private bool ShowRsaMenu()

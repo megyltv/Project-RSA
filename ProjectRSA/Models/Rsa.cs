@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ProjectRSA.Model
+namespace ProjectRSA.Models
 {
     public class Rsa
     {
@@ -38,9 +38,7 @@ namespace ProjectRSA.Model
         {
             var messageInts = MessageExtensions.ConvertToInt(message);
             var cipherMessage = messageInts.Select(msg => NumberTheoryOperations.CalculateSquareAndMultiply(E, msg, N)).ToList();
-            var printMessage = string.Empty;
-            cipherMessage.ForEach(cipher => printMessage += $"{cipher},");
-            Console.WriteLine(printMessage[0..^1]);
+            PrintMessage(cipherMessage);
         }
 
         public void DecipherMessage(IEnumerable<long> cipherNumbers)
@@ -53,10 +51,8 @@ namespace ProjectRSA.Model
         public void SignMessage(string message)
         {
             var messageInts = MessageExtensions.ConvertToInt(message);
-            var cipherMessage = messageInts.Select(msg => NumberTheoryOperations.CalculateSquareAndMultiply(D, msg, N)).ToList();
-            var printMessage = string.Empty;
-            cipherMessage.ForEach(cipher => printMessage += $"{cipher},");
-            Console.WriteLine(printMessage[0..^1]);
+            var messageSigned = messageInts.Select(msg => NumberTheoryOperations.CalculateSquareAndMultiply(D, msg, N)).ToList();
+            PrintMessage(messageSigned);
         }
 
         public void VerifyMessage(IEnumerable<long> cipherNumbers, string message)
@@ -68,6 +64,13 @@ namespace ProjectRSA.Model
                 Console.WriteLine($"Different signatures");
             Console.WriteLine($"Signature verified");
             Console.WriteLine($"MessageSigned: {messageSigned} == Message: {message}");
+        }
+
+        private void PrintMessage(List<long> cipherMessage)
+        {
+            var printMessage = string.Empty;
+            cipherMessage.ForEach(cipher => printMessage += $"{cipher},");
+            Console.WriteLine(printMessage[0..^1]);
         }
     }
 }
